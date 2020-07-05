@@ -164,3 +164,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
     return true;
 }
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+        case _QWERTY:
+            set_led_off;
+            break;
+        case _MOUSE:
+            set_led_green;
+        default:
+            break;
+    }
+    return state;
+}
