@@ -123,8 +123,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MEDIA] = LAYOUT_ergodox_pretty(
-        RESET,   BASE,    ERGO,    EDGE,    _______, _______, AG_NORM,     AG_SWAP, KC_F14,  KC_F15,  _______, _______, _______, _______,
-        _______, _______, KC_BTN3, KC_MS_U, KC_BTN2, _______, _______,     _______, _______, KC_BTN2, KC_WH_U, KC_BTN3, _______, _______,
+        RESET,   BASE,    ERGO,    EDGE,    _______, _______, AG_NORM,     AG_SWAP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,
+        _______, _______, KC_BTN3, KC_MS_U, KC_BTN2, _______, KC_F14,      KC_F15,  _______, KC_BTN2, KC_WH_U, KC_BTN3, _______, _______,
         KC_CAPS, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN1,                       KC_BTN1, KC_WH_L, KC_WH_D, KC_WH_R, _______, KC_MPLY,
         _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
         _______, _______, _______, AG_NORM, AG_SWAP,                                         KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
