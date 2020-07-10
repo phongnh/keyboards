@@ -3,8 +3,9 @@
 
 enum ergodox_ez_layers {
     _BASE,
-    _ERGO,
+    _ARROW,
     _EDGE,
+    _ERGO,
     _MOD,
     _LOWER,
     _RAISE,
@@ -20,8 +21,9 @@ enum ergodox_ez_custom_keycodes {
 
 // clang-format off
 #define BASE    DF(_BASE)
-#define ERGO    DF(_ERGO)
+#define ARROW   DF(_ARROW)
 #define EDGE    DF(_EDGE)
+#define ERGO    DF(_ERGO)
 #define TT_SYM  TT(_SYMBOL)
 #define SYM_GRV LT(_SYMBOL, KC_GRV)
 #define SYM_LBR LT(_SYMBOL, KC_LBRC)
@@ -40,6 +42,7 @@ enum ergodox_ez_custom_keycodes {
 #define CTL_Z   CTL_T(KC_Z)
 #define CTL_SLS CTL_T(KC_SLSH)
 #define CTL_ESC CTL_T(KC_ESC)
+#define SFT_ENT SFT_T(KC_ENT)
 #define CAG_QUO LCAG_T(KC_QUOT)
 // clang-format on
 
@@ -56,12 +59,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             KC_SPC,  KC_BSPC, KC_END,      KC_PGDN, KC_TAB,  KC_ENT
     ),
 
-    [_ERGO] = LAYOUT_ergodox_pretty(
+    [_ARROW] = LAYOUT_ergodox_pretty(
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,     KC_RGHT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
-        KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    MED_SCL, GUI_QUO,
-        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    ALL_LCB,     MEH_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSFT,
-        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, KC_RGHT,                                         KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
+        MOD_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    MED_SCL, GUI_QUO,
+        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    LWR_LCB,     RSE_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSFT,
+        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, GUI_RGH,                                         ALT_UP,  KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
                                                      ALT_APP, KC_LGUI,     KC_LALT, CTL_ESC,
                                                               KC_HOME,     KC_PGUP,
                                             KC_SPC,  KC_BSPC, KC_END,      KC_PGDN, KC_TAB,  KC_ENT
@@ -69,10 +72,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_EDGE] = LAYOUT_ergodox_pretty(
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,     KC_RGHT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
         MOD_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    MED_SCL, GUI_QUO,
-        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    LWR_LCB,     RSE_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSFT,
-        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, KC_RGHT,                                         KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
+        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    LWR_LCB,     RSE_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, SFT_ENT,
+        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, GUI_RGH,                                         ALT_UP,  KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
+                                                     ALT_APP, KC_LGUI,     KC_LALT, CTL_ESC,
+                                                              KC_HOME,     KC_PGUP,
+                                            KC_BSPC, KC_ENT,  KC_END,      KC_PGDN, KC_TAB,  KC_SPC
+    ),
+
+    [_ERGO] = LAYOUT_ergodox_pretty(
+        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,     KC_RGHT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+        KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
+        KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    MED_SCL, GUI_QUO,
+        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    ALL_LCB,     MEH_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSFT,
+        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, GUI_RGH,                                         ALT_UP,  KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
                                                      ALT_APP, KC_LGUI,     KC_LALT, CTL_ESC,
                                                               KC_HOME,     KC_PGUP,
                                             KC_SPC,  KC_BSPC, KC_END,      KC_PGDN, KC_TAB,  KC_ENT
@@ -123,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MEDIA] = LAYOUT_ergodox_pretty(
-        RESET,   BASE,    ERGO,    EDGE,    _______, _______, AG_NORM,     AG_SWAP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,
+        RESET,   BASE,    ARROW,   EDGE,    ERGO,    _______, AG_NORM,     AG_SWAP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,
         _______, _______, KC_BTN3, KC_MS_U, KC_BTN2, _______, KC_F14,      KC_F15,  _______, KC_BTN2, KC_WH_U, KC_BTN3, _______, _______,
         KC_CAPS, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN1,                       KC_BTN1, KC_WH_L, KC_WH_D, KC_WH_R, _______, KC_MPLY,
         _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
