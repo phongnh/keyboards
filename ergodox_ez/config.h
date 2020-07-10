@@ -1,7 +1,4 @@
-#ifndef CONFIG_PHONGNH_H_
-#define CONFIG_PHONGNH_H_
-
-#include "../../config.h"
+#pragma once
 
 // #undef  MOUSEKEY_INTERVAL
 // #define MOUSEKEY_INTERVAL 20
@@ -23,5 +20,3 @@
 
 // #undef  LEADER_TIMEOUT
 // #define LEADER_TIMEOUT 1000
-
-#endif /* CONFIG_PHONGNH_H_ */

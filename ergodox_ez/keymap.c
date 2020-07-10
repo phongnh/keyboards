@@ -1,248 +1,178 @@
 #include QMK_KEYBOARD_H
-#include "debug.h"
-#include "action_layer.h"
 #include "version.h"
 
-enum custom_layers {
-    _QWERTY,
-    _DVORAK,
+enum ergodox_ez_layers {
+    _BASE,
+    _ERGO,
+    _EDGE,
+    _MOD,
+    _LOWER,
+    _RAISE,
     _SYMBOL,
     _MEDIA,
 };
 
-enum custom_keycodes {
+enum ergodox_ez_custom_keycodes {
     PLACEHOLDER = SAFE_RANGE,
     VRSN,
     EPRM,
-    QWERTY,
-    DVORAK,
 };
 
+// clang-format off
+#define BASE    DF(_BASE)
+#define ERGO    DF(_ERGO)
+#define EDGE    DF(_EDGE)
+#define TT_SYM  TT(_SYMBOL)
+#define SYM_GRV LT(_SYMBOL, KC_GRV)
+#define SYM_LBR LT(_SYMBOL, KC_LBRC)
+#define SYM_RBR LT(_SYMBOL, KC_RBRC)
+#define MOD_ESC LT(_MOD, KC_ESC)
+#define LWR_LCB LT(_LOWER, KC_LCBR)
+#define RSE_RCB LT(_RAISE, KC_RCBR)
+#define MED_SCL LT(_MEDIA, KC_SCLN)
+#define ALL_LCB ALL_T(KC_LCBR)
+#define MEH_RCB MEH_T(KC_RCBR)
+#define GUI_QUO GUI_T(KC_QUOT)
+#define GUI_RGH GUI_T(KC_RGHT)
+#define ALT_UP  ALT_T(KC_UP)
+#define ALT_APP ALT_T(KC_APP)
+#define ALT_SFT LALT(KC_LSFT)
+#define CTL_Z   CTL_T(KC_Z)
+#define CTL_SLS CTL_T(KC_SLSH)
+#define CTL_ESC CTL_T(KC_ESC)
+#define CAG_QUO LCAG_T(KC_QUOT)
+// clang-format on
+
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Default Layer
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |    =   |   1  |   2  |   3  |   4  |   5  | Left |           | Right|   6  |   7  |   8  |   9  |   0  |   -    |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |  Del   |   Q  |   W  |   E  |   R  |   T  | ~L2  |           | ~L1  |   Y  |   U  |   I  |   O  |   P  |   \    |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |Alt/Esc |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |; / L2|' / LGui|
- * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
- * |LShift  |Z/Ctrl|   X  |   C  |   V  |   B  |   [  |           |  ]   |   N  |   M  |   ,  |   .  |//Ctrl|RShift  |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Grv/L1|'"/CAG|AltShf| Left | Right|                                       |  Up  | Down |   [  |]/CShf| ~L1  |
- *   `----------------------------------'                                       `----------------------------------'
- *                                       ,--------------.       ,---------------.
- *                                       |App/Alt| LGui |       | Alt  |Ctrl/Esc|
- *                                ,------|-------|------|       |------+--------+------.
- *                                |      |       | Home |       | PgUp |        |      |
- *                                | Space|BkSpace|------|       |------|  Tab   |Enter |
- *                                |      |       | End  |       | PgDn |        |      |
- *                                `---------------------'       `----------------------'
- */
-[_QWERTY] = LAYOUT_ergodox(
-    // left hand
-    KC_EQL,               KC_1,             KC_2,           KC_3,     KC_4,     KC_5,           KC_LEFT,
-    KC_DELT,              KC_Q,             KC_W,           KC_E,     KC_R,     KC_T,           KC_FN2,
-    ALT_T(KC_ESC),        KC_A,             KC_S,           KC_D,     KC_F,     KC_G,
-    KC_LSFT,              CTL_T(KC_Z),      KC_X,           KC_C,     KC_V,     KC_B,           ALL_T(KC_LBRC),
-    LT(_SYMBOL, KC_GRV),  LCAG_T(KC_QUOT),  LALT(KC_LSFT),  KC_LEFT,  KC_RGHT,
-                                                                                ALT_T(KC_APP),  KC_LGUI,
-                                                                                                KC_HOME,
-                                                                      KC_SPC,   KC_BSPC,        KC_END,
-    // right hand
-    KC_RGHT,           KC_6,             KC_7,   KC_8,     KC_9,     KC_0,                 KC_MINS,
-    KC_FN1,            KC_Y,             KC_U,   KC_I,     KC_O,     KC_P,                 KC_BSLS,
-                       KC_H,             KC_J,   KC_K,     KC_L,     LT(_MEDIA, KC_SCLN),  GUI_T(KC_QUOT),
-    MEH_T(KC_RBRC),    KC_N,             KC_M,   KC_COMM,  KC_DOT,   CTL_T(KC_SLSH),       KC_RSFT,
-                                         KC_UP,  KC_DOWN,  KC_LBRC,  C_S_T(KC_RBRC),       KC_FN1,
-    KC_LALT,           CTL_T(KC_ESC),
-    KC_PGUP,
-    KC_PGDN,           KC_TAB,           KC_ENT
-),
+    [_BASE] = LAYOUT_ergodox_pretty(
+        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,     KC_RGHT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
+        CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    MED_SCL, GUI_QUO,
+        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    LWR_LCB,     RSE_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSFT,
+        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, GUI_RGH,                                         ALT_UP,  KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
+                                                     ALT_APP, KC_LGUI,     KC_LALT, CTL_ESC,
+                                                              KC_HOME,     KC_PGUP,
+                                            KC_SPC,  KC_BSPC, KC_END,      KC_PGDN, KC_TAB,  KC_ENT
+    ),
 
-/* Dvorak Layer
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |   =    |   1  |   2  |   3  |   4  |   5  | Left |           |Right |   6  |   7  |   8  |   9  |   0  |   \    |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Del    |   '  |   ,  |   .  |   P  |   Y  | ~L2  |           | ~L1  |   F  |   G  |   C  |   R  |   L  |   /    |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |Alt/Esc |   A  |   O  |   E  |   U  |   I  |------|           |------|   D  |   H  |   T  |   N  |S / L2|- / LGui|
- * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
- * | LShift |:/Ctrl|   Q  |   J  |   K  |   X  |   [  |           |  ]   |   B  |   M  |   W  |   V  |Z/Ctrl| RShift |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Grv/L1|'"/CAG|AltShf| Left | Right|                                       |  Up  | Down |   [  |]/CShf| ~L1  |
- *   `----------------------------------'                                       `----------------------------------'
- *                                       ,--------------.       ,---------------.
- *                                       |App/Alt| LGui |       | Alt  |Ctrl/Esc|
- *                                ,------|-------|------|       |------+--------+------.
- *                                |      |       | Home |       | PgUp |        |      |
- *                                | Space|BkSpace|------|       |------|  Tab   |Enter |
- *                                |      |       | End  |       | PgDn |        |      |
- *                                `---------------------'       `----------------------'
- */
-[_DVORAK] = LAYOUT_ergodox(
-    // left hand
-    KC_EQL,               KC_1,             KC_2,           KC_3,     KC_4,     KC_5,           KC_LEFT,
-    KC_DELT,              KC_QUOT,          KC_COMM,        KC_DOT,   KC_P,     KC_Y,           KC_FN2,
-    ALT_T(KC_ESC),        KC_A,             KC_O,           KC_E,     KC_U,     KC_I,
-    KC_LSFT,              CTL_T(KC_SCLN),   KC_Q,           KC_J,     KC_K,     KC_X,           ALL_T(KC_LBRC),
-    LT(_SYMBOL, KC_GRV),  LCAG_T(KC_QUOT),  LALT(KC_LSFT),  KC_LEFT,  KC_RGHT,
-                                                                                ALT_T(KC_APP),  KC_LGUI,
-                                                                                                KC_HOME,
-                                                                      KC_SPC,   KC_BSPC,        KC_END,
-    // right hand
-    KC_RGHT,           KC_6,             KC_7,   KC_8,     KC_9,     KC_0,              KC_BSLS,
-    KC_FN1,            KC_F,             KC_G,   KC_C,     KC_R,     KC_L,              KC_SLSH,
-                       KC_D,             KC_H,   KC_T,     KC_N,     LT(_MEDIA, KC_S),  GUI_T(KC_MINS),
-    MEH_T(KC_RBRC),    KC_B,             KC_M,   KC_W,     KC_V,     CTL_T(KC_Z),       KC_RSFT,
-                                         KC_UP,  KC_DOWN,  KC_LBRC,  C_S_T(KC_RBRC),    KC_FN1,
-    KC_LALT,           CTL_T(KC_ESC),
-    KC_PGUP,
-    KC_PGDN,           KC_TAB,           KC_ENT
-),
+    [_ERGO] = LAYOUT_ergodox_pretty(
+        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,     KC_RGHT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+        KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
+        KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    MED_SCL, GUI_QUO,
+        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    ALL_LCB,     MEH_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSFT,
+        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, KC_RGHT,                                         KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
+                                                     ALT_APP, KC_LGUI,     KC_LALT, CTL_ESC,
+                                                              KC_HOME,     KC_PGUP,
+                                            KC_SPC,  KC_BSPC, KC_END,      KC_PGDN, KC_TAB,  KC_ENT
+    ),
 
-/* Symbol Layer
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |Version |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Insert |   !  |   @  |   {  |   }  |   |  |      |           |      |  Up  |   7  |   8  |   9  |   *  |   F12  |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |Capslock|   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   +  | PrtScr |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       | EPRM |    . |   0  |   =  |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
- *                                 |      |      |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-[_SYMBOL] = LAYOUT_ergodox(
-    // left hand
-    VRSN,     KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_TRNS,
-    KC_INS,   KC_EXLM,  KC_AT,    KC_LCBR,  KC_RCBR,  KC_PIPE,  KC_TRNS,
-    KC_CAPS,  KC_HASH,  KC_DLR,   KC_LPRN,  KC_RPRN,  KC_GRV,
-    KC_TRNS,  KC_PERC,  KC_CIRC,  KC_LBRC,  KC_RBRC,  KC_TILD,  KC_TRNS,
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-                                                      KC_TRNS,  KC_TRNS,
-                                                                KC_TRNS,
-                                            KC_TRNS,  KC_TRNS,  KC_TRNS,
-    // right hand
-    KC_TRNS,  KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,
-    KC_TRNS,  KC_UP,    KC_7,     KC_8,     KC_9,     KC_ASTR,  KC_F12,
-              KC_DOWN,  KC_4,     KC_5,     KC_6,     KC_PLUS,  KC_PSCR,
-    KC_TRNS,  KC_AMPR,  KC_1,     KC_2,     KC_3,     KC_BSLS,  KC_TRNS,
-                        EPRM,     KC_DOT,   KC_0,     KC_EQL,   KC_TRNS,
-    KC_TRNS,  KC_TRNS,
-    KC_TRNS,
-    KC_TRNS,  KC_TRNS,  KC_TRNS
-),
+    [_EDGE] = LAYOUT_ergodox_pretty(
+        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,     KC_RGHT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+        KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    SYM_LBR,     SYM_RBR, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
+        MOD_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    MED_SCL, GUI_QUO,
+        KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    LWR_LCB,     RSE_RCB, KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSFT,
+        SYM_GRV, CAG_QUO, ALT_SFT, KC_LEFT, KC_RGHT,                                         KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC, TT_SYM,
+                                                     ALT_APP, KC_LGUI,     KC_LALT, CTL_ESC,
+                                                              KC_HOME,     KC_PGUP,
+                                            KC_SPC,  KC_BSPC, KC_END,      KC_PGDN, KC_TAB,  KC_ENT
+    ),
 
-/* Media and mouse keys
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |  Wake  |      |QWERTY|DVORAK|      |      |Sleep |           |Power | F14  | F15  |      |      |      |        |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |MClick| MsUp |RClick|      |      |           |      |      |RClick| SUp  |MClick|      |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |LClick|MsLeft|MsDown|MsRght|LClick|------|           |------|LClick| SLeft| SDown|SRight|      |  Play  |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |AGnorm|AGswap|                                       |VolUp |VolDn | Mute |      |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
- *                                 |LClick|RClick|------|       |------|LClick|RClick|
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-[_MEDIA] = LAYOUT_ergodox(
-    // left hand
-    KC_WAKE,  KC_TRNS,  QWERTY,   DVORAK,   KC_TRNS,  KC_TRNS,  KC_SLEP,
-    KC_TRNS,  KC_TRNS,  KC_BTN3,  KC_MS_U,  KC_BTN2,  KC_TRNS,  KC_TRNS,
-    KC_TRNS,  KC_BTN1,  KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_BTN1,
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  AG_NORM,  AG_SWAP,
-                                                      KC_TRNS,  KC_TRNS,
-                                                                KC_TRNS,
-                                            KC_BTN1,  KC_BTN2,  KC_TRNS,
-    // right hand
-    KC_PWR,   KC_F14,   KC_F15,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
-    KC_TRNS,  KC_TRNS,  KC_BTN2,  KC_WH_U,  KC_BTN3,  KC_TRNS,  KC_TRNS,
-              KC_BTN1,  KC_WH_L,  KC_WH_D,  KC_WH_R,  KC_TRNS,  KC_MPLY,
-    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_MPRV,  KC_MNXT,  KC_TRNS,  KC_TRNS,
-                        KC_VOLU,  KC_VOLD,  KC_MUTE,  KC_TRNS,  KC_TRNS,
-    KC_TRNS,  KC_TRNS,
-    KC_TRNS,
-    KC_TRNS,  KC_BTN1,  KC_BTN2
-),
+    [_MOD] = LAYOUT_ergodox_pretty(
+        KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,     _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+        _______, KC_PGDN, KC_UP,   KC_PGUP, _______, _______, _______,     _______, _______, KC_PGDN, KC_UP,   KC_PGUP, KC_PSCR, KC_HOME,
+        _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,                       _______, KC_LEFT, KC_DOWN, KC_DOWN, _______, KC_END,
+        _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______,
+                                                     _______, _______,     _______, _______,
+                                                              _______,     _______,
+                                            _______, _______, _______,     _______, _______, _______
+    ),
+
+    [_LOWER] = LAYOUT_ergodox_pretty(
+        KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,     _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+        KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______,     _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
+        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                          KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_COLN, KC_DQT,
+        _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,     _______, KC_UNDS, KC_PLUS, KC_LT,   KC_GT,   KC_QUES, _______,
+        _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______,
+                                                     _______, _______,     _______, _______,
+                                                              _______,     _______,
+                                            _______, _______, _______,     _______, KC_DEL,  _______
+    ),
+
+    [_RAISE] = LAYOUT_ergodox_pretty(
+        KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,     _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+        KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______,     _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
+        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                          KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_COLN, KC_DQT,
+        _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,     _______, KC_UNDS, KC_PLUS, KC_LT,   KC_GT,   KC_QUES, _______,
+        _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,                                         _______, _______, _______, _______, _______,
+                                                     _______, _______,     _______, _______,
+                                                              _______,     _______,
+                                            _______, KC_DEL,  _______,     _______, _______, _______
+    ),
+
+    [_SYMBOL] = LAYOUT_ergodox_pretty(
+        VRSN,    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,     _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+        KC_DEL,  KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, _______,     _______, KC_UP,   KC_7,    KC_8,    KC_9,    KC_ASTR, KC_F12,
+        KC_CAPS, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                        KC_DOWN, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_PSCR,
+        _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______,     _______, KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
+        _______, _______, _______, _______, _______,                                         EPRM,    KC_DOT,  KC_0,    KC_EQL,  _______,
+                                                     _______, _______,     _______, _______,
+                                                              _______,     _______,
+                                            _______, _______, _______,     _______, _______, _______
+    ),
+
+    [_MEDIA] = LAYOUT_ergodox_pretty(
+        RESET,   BASE,    ERGO,    EDGE,    _______, _______, AG_NORM,     AG_SWAP, KC_F14,  KC_F15,  _______, _______, _______, _______,
+        _______, _______, KC_BTN3, KC_MS_U, KC_BTN2, _______, _______,     _______, _______, KC_BTN2, KC_WH_U, KC_BTN3, _______, _______,
+        KC_CAPS, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN1,                       KC_BTN1, KC_WH_L, KC_WH_D, KC_WH_R, _______, KC_MPLY,
+        _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
+        _______, _______, _______, AG_NORM, AG_SWAP,                                         KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
+                                                     _______, _______,     _______, _______,
+                                                              _______,     _______,
+                                            KC_BTN1, KC_BTN2, _______,     _______, KC_BTN1, KC_BTN2
+    ),
+
+    /*
+     * [_SAMPLE] = LAYOUT_ergodox_pretty(
+     *     _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+     *     _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+     *     _______, _______, _______, _______, _______, _______,                       _______, _______, _______, _______, _______, _______,
+     *     _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+     *     _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______,
+     *                                                  _______, _______,     _______, _______,
+     *                                                           _______,     _______,
+     *                                         _______, _______, _______,     _______, _______, _______
+     * ),
+     */
 };
+// clang-format on
 
-const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(_SYMBOL),  // FN1 - Momentary Layer Symbols (_SYMBOL)
-    [2] = ACTION_LAYER_TAP_TOGGLE(_MEDIA),   // FN2 - Momentary Layer Media (_MEDIA)
-};
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
-    // MACRODOWN only works in this function
-    switch(id) {
-    case 0:
-        if (record->event.pressed) {
-            SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-        }
-        break;
-    case 1:
-        if (record->event.pressed) { // For resetting EEPROM
-            eeconfig_init();
-        }
-        break;
-    }
-    return MACRO_NONE;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
-    case VRSN:
-        if (record->event.pressed) {
-            SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-        }
-        return false;
-        break;
-    case EPRM:
-        if (record->event.pressed) {
-            eeconfig_init();
-        }
-        return false;
-        break;
+        case VRSN:
+            if (record->event.pressed) {
+                SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+            }
+            return false;
+            break;
+        case EPRM:
+            if (record->event.pressed) {
+                eeconfig_init();
+            }
+            return false;
+            break;
     }
-    case QWERTY:
-        if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY);
-        }
-        return false;
-        break;
-    case DVORAK:
-        if (record->event.pressed) {
-            set_single_persistent_default_layer(_DVORAK);
-        }
-        return false;
-        break;
     return true;
 }
 
 // Runs just one time when the keyboard initializes.
-void matrix_init_user(void) {
-}
+// void matrix_init_user(void) {
+// }
 
 // Runs constantly in the background, in a loop.
-void matrix_scan_user(void) {
-}
+// void matrix_scan_user(void) {
+// }
 
 // Runs whenever there is a layer state change.
 uint32_t layer_state_set_user(uint32_t state) {
@@ -253,21 +183,20 @@ uint32_t layer_state_set_user(uint32_t state) {
 
     uint8_t layer = biton32(state);
     switch (layer) {
-    case _SYMBOL:
-        ergodox_right_led_1_on();
-        break;
-    case _MEDIA:
-        ergodox_right_led_2_on();
-        break;
-    default:
-        break;
+        case _SYMBOL:
+            ergodox_right_led_1_on();
+            break;
+        case _MEDIA:
+            ergodox_right_led_2_on();
+            break;
+        default:
+            break;
     }
 
     // capslock
     if (host_keyboard_leds() & (3 << USB_LED_CAPS_LOCK)) {
         ergodox_right_led_3_on();
-    }
-    else {
+    } else {
         ergodox_right_led_3_off();
     }
 
