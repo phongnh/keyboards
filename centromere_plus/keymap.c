@@ -43,8 +43,6 @@ enum centromere_plus_keycodes {
 #define SFT_BSL RSFT_T(KC_BSLS)         // Right Shift when held, \ when tapped
 #define CAG_PUP LCAG_T(KC_PGUP)         // Ctrl+Alt+Gui when held, Page Up when tapped
 #define CAG_PDN LCAG_T(KC_PGDN)         // Ctrl+Alt+Gui when held, Page Down when tapped
-#define CAG_LBR LCAG_T(KC_LBRC)         // Ctrl+Alt+Gui when held, [ when tapped
-#define CAG_RBR LCAG_T(KC_RBRC)         // Ctrl+Alt+Gui when held, ] when tapped
 // clang-format on
 
 // clang-format off
