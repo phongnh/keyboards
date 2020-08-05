@@ -20,3 +20,6 @@
 
 // #undef  LEADER_TIMEOUT
 // #define LEADER_TIMEOUT 1000
+
+#undef  DEBOUNCE
+#define DEBOUNCE 35
