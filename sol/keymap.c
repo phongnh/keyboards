@@ -23,6 +23,7 @@ enum sol_layers {
 enum sol_keycodes {
     RGBRST = SAFE_RANGE,
     RGB_MENU,
+    EPRM,
 };
 
 // clang-format off
@@ -114,9 +115,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MOUSE] = LAYOUT( \
         RESET,   BASE,    ARROW,   EDGE,    _______, _______, AG_NORM, AG_SWAP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, \
         _______, _______, KC_BTN3, KC_MS_U, KC_BTN2, _______, KC_F14,  KC_F15,  _______, KC_BTN2, KC_WH_U, KC_BTN3, _______, _______, \
-        _______, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN1, _______, _______, KC_BTN1, KC_WH_L, KC_WH_D, KC_WH_R, _______, _______, \
+        KC_CAPS, KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN1, _______, _______, KC_BTN1, KC_WH_L, KC_WH_D, KC_WH_R, _______, _______, \
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+        EPRM,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
                                                      _______, _______, _______, _______  \
     ),
 
@@ -290,6 +291,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
 #endif
             return false;
+            break;
         case RESET:
             if (record->event.pressed) {
                 reset_timer = timer_read();
@@ -297,12 +299,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 reset_keyboard();
             }
             return false;
+            break;
 #if defined(RGB_MATRIX_ENABLE) && defined(KEYBOARD_rgbkb_sol_rev2)
         case RGB_TOG:
             if (record->event.pressed) {
                 rgb_matrix_increase_flags();
             }
             return false;
+            break;
 #endif
         case RGB_MENU:
 #ifdef RGB_OLED_MENU
@@ -318,6 +322,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
 #endif
             return false;
+            break;
+        case EPRM:
+            if (record->event.pressed) {
+                eeconfig_init();
+            }
+            return false;
+            break;
     }
     return true;
 }
