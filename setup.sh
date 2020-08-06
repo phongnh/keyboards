@@ -5,7 +5,7 @@ function clone_repo() {
     local repo="$2"
     echo "==> Dir: $dir - Repo: $repo"
     if [ -d "$dir" ]; then
-        cd "$dir" && git fetch -p && git reset --hard HEAD
+        cd "$dir" && git fetch -p && git rebase --autostash
     else
         git clone "$repo" "$dir"
     fi
