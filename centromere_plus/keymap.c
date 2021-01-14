@@ -15,18 +15,18 @@ enum centromere_plus_layers {
 
 enum centromere_plus_keycodes {
     EPRM = SAFE_RANGE,
+    DEFAULT,
+    BASE_V0,
+    BASE_V1,
+    IRIS,
+    ATREUS,
+    ERGODOX,
 };
 
 // clang-format off
 // Fillers to make layering more clear
 #define XXXXXXX KC_NO
 #define _______ KC_TRNS
-#define DEFAULT DF(_DEFAULT)
-#define BASE_V0 DF(_BASE_V0)
-#define BASE_V1 DF(_BASE_V1)
-#define IRIS    DF(_IRIS)
-#define ATREUS  DF(_ATREUS)
-#define ERGODOX DF(_ERGODOX)
 #define LOWER   MO(_LOWER)
 #define RAISE   MO(_RAISE)
 #define LWR_SPC LT(_LOWER, KC_SPC)      // Turn on _LOWER layer when held, Space when tapped
@@ -162,6 +162,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case EPRM:
             if (record->event.pressed) {
                 eeconfig_init();
+            }
+            return false;
+            break;
+        case DEFAULT:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_DEFAULT);
+            }
+            return false;
+            break;
+        case BASE_V0:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_BASE_V0);
+            }
+            return false;
+            break;
+        case BASE_V1:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_BASE_V1);
+            }
+            return false;
+            break;
+        case IRIS:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_IRIS);
+            }
+            return false;
+            break;
+        case ATREUS:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_ATREUS);
+            }
+            return false;
+            break;
+        case ERGODOX:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_ERGODOX);
             }
             return false;
             break;
