@@ -23,3 +23,6 @@
 #define GRAVE_ESC_CTRL_OVERRIDE
 // Always send Escape if GUI is pressed
 #define GRAVE_ESC_GUI_OVERRIDE
+
+#undef  DEBOUNCE
+#define DEBOUNCE 35
